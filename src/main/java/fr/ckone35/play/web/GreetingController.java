@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 @Controller
 public class GreetingController {
 
@@ -28,6 +31,12 @@ public class GreetingController {
         System.out.println(response.getBody());
         model.addAttribute("length", response.getBody().length());
         model.addAttribute("name", name);
+
+        try {
+            model.addAttribute("hostname", InetAddress.getLocalHost().getHostName());
+        } catch (UnknownHostException e) {
+            throw new RuntimeException("impossible to retrieve hostname", e);
+        }
 
         return "greeting";
     }

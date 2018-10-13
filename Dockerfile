@@ -7,4 +7,5 @@ RUN mvn  -f /usr/src/myapp/pom.xml clean package
 FROM openjdk:8-alpine
 VOLUME /tmp
 COPY --from=BUILD /usr/src/myapp/target/play.jar /play.jar
+EXPOSE 8080
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/play.jar"]
